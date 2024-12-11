@@ -8,7 +8,7 @@ type MapComponentProps = {
 
 const MapComponent: React.FC<MapComponentProps> = ({ latitude, longitude }) => {
   return (
-    <div style={{ height: "300px", width: "300px", borderRadius: "8px" }}>
+    <div style={{ height: "300px", width: "280px", borderRadius: "10px" }}>
       <MapContainer
         center={[latitude, longitude]}
         zoom={13}
