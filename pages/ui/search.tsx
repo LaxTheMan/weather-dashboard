@@ -4,16 +4,25 @@ import type { GetProps } from "antd";
 
 type SearchProps = GetProps<typeof Input.Search>;
 
+type SearchBarProps = {
+  onSearch: (query: string) => void;
+};
+
 const { Search } = Input;
 
-const onSearch: SearchProps["onSearch"] = (value, _e, info) =>
-  console.log(info?.source, value);
+export const SearchBar = ({ onSearch }: SearchBarProps) => {
+  const handleSearch: SearchProps["onSearch"] = (value, _e, info) => {
+    console.log(info?.source, value);
+    if (value) {
+      onSearch(value);
+    }
+  };
 
-export const SearchBar = () => {
   return (
     <Search
-      placeholder="input search text"
+      placeholder="Enter city name..."
       allowClear
-      onSearch={onSearch} />
+      onSearch={handleSearch}
+    />
   );
 };

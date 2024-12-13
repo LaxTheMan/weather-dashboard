@@ -20,7 +20,7 @@ type DetailedCardProps = {
   handleReload: () => void;
 };
 
-const DetailedCard: React.FC<DetailedCardProps> = ({
+const DetailedCard= ({
   date,
   time,
   weather,
@@ -34,7 +34,7 @@ const DetailedCard: React.FC<DetailedCardProps> = ({
   dewPoint,
   visibility,
   handleReload,
-}) => {
+}: DetailedCardProps) => {
   return (
     <Card style={{ width: 350, borderRadius: 8 }}>
       <Row justify="space-between">

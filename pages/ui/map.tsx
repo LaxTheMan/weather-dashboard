@@ -6,7 +6,7 @@ type MapComponentProps = {
   longitude: number;
 };
 
-const MapComponent: React.FC<MapComponentProps> = ({ latitude, longitude }) => {
+const MapComponent = ({ latitude, longitude }: MapComponentProps) => {
   return (
     <div style={{ height: "300px", width: "280px", borderRadius: "10px" }}>
       <MapContainer

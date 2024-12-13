@@ -1,11 +1,13 @@
 import axios from "axios";
-import { formatTo12Hour } from "./date";
+import { formatTo12Hour } from "../lib/date";
 
 const API_KEY = process.env.NEXT_PUBLIC_OPENWEATHERMAP_API_KEY;
 const BASE_URL = "https://api.openweathermap.org/data/2.5";
 
 export type Weather = {
   date: number;
+  city: string;
+  cityCode: string;
   weather: string;
   weatherIcon: string;
   temp: number;
@@ -66,6 +68,7 @@ type WeatherApiResponse = {
   };
   dt: number;
   sys: {
+    country: string;
     sunrise: number;
     sunset: number;
   };
@@ -145,8 +148,8 @@ export const getWeatherByCity = async (city: string) => {
 export const getWeatherByCoordinates = async (lat: number, lon: number) => {
   const response = await axios.get(`${BASE_URL}/weather`, {
     params: {
-      lat,
-      lon,
+      lat: lat,
+      lon: lon,
       appid: API_KEY,
       units: "metric",
     },
@@ -157,8 +160,8 @@ export const getWeatherByCoordinates = async (lat: number, lon: number) => {
 export const getDailyForecast = async (lat: number, lon: number) => {
   const response = await axios.get(`${BASE_URL}/forecast`, {
     params: {
-      lat,
-      lon,
+      lat: lat,
+      lon: lon,
       appid: API_KEY,
       units: "metric",
     },
@@ -169,8 +172,8 @@ export const getDailyForecast = async (lat: number, lon: number) => {
 export const getHourlyForecast = async (lat: number, lon: number) => {
   const response = await axios.get(`${BASE_URL}/forecast`, {
     params: {
-      lat,
-      lon,
+      lat: lat,
+      lon: lon,
       cnt: 8,
       appid: API_KEY,
       units: "metric",
@@ -183,6 +186,8 @@ export const getHourlyForecast = async (lat: number, lon: number) => {
 const extractWeatherData = (data: WeatherApiResponse): Weather => {
   return {
     date: data.dt,
+    city: data.name,
+    cityCode: data.sys.country,
     weather: data.weather[0].main,
     weatherIcon: data.weather[0].icon,
     temp: data.main.temp,
