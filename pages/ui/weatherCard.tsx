@@ -25,7 +25,7 @@ export const WeatherCard = ({
 }: WeatherCardProps) => {
   return (
     <Card
-      className="bg-offwhite w-32 text-center flex flex-col items-center"
+      className="bg-offwhite text-center flex flex-col items-center h-full"
       bordered={false}
     >
       <Title level={4}>
@@ -34,18 +34,14 @@ export const WeatherCard = ({
       <Flex gap="middle" align="center" vertical>
         <Image
           preview={false}
-          width={50}
+          width={"100%"}
           src={`https://openweathermap.org/img/wn/${weatherIcon}@4x.png`}
           alt="Weather Image"
         />
-        {/* <SunOutlined style={{ fontSize: "56px", color: "#FFD700" }} /> */}
         <Text strong>{weather}</Text>
       </Flex>
       <div>
-        <Text strong>
-          {/* {minTemp}° / {maxTemp}° */}
-          {temp}°
-        </Text>
+        <Text strong>{temp}°</Text>
       </div>
     </Card>
   );

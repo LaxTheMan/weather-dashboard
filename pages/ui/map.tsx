@@ -1,31 +1,40 @@
-import React from "react";
-import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
+import { useEffect } from "react";
+import { MapContainer, TileLayer, useMap } from "react-leaflet";
+import { Coord } from "../hooks/useWeather";
 
-type MapComponentProps = {
-  latitude: number;
-  longitude: number;
+type LeafletMapProps = {
+  coord: Coord;
+  zoom: number;
 };
 
-const MapComponent = ({ latitude, longitude }: MapComponentProps) => {
+const MapUpdater = ({ coord, zoom }: LeafletMapProps) => {
+  const map = useMap();
+
+  useEffect(() => {
+    if (coord.lat !== 0 && coord.lon !== 0) {
+      map.setView([coord.lat, coord.lon], zoom);
+    }
+  }, [coord, map]);
+
+  return null;
+};
+
+export const LeafletMap = ({ coord, zoom }: LeafletMapProps) => {
   return (
-    <div style={{ height: "300px", width: "280px", borderRadius: "10px" }}>
-      <MapContainer
-        center={[latitude, longitude]}
-        zoom={13}
-        style={{ height: "100%", width: "100%" }}
-      >
-        <TileLayer
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-        />
-        <Marker position={[latitude, longitude]}>
-          <Popup>
-            You are here: [{latitude}, {longitude}]
-          </Popup>
-        </Marker>
-      </MapContainer>
-    </div>
+    <MapContainer
+      center={[coord.lat, coord.lon]}
+      className="h-full w-full"
+      zoom={zoom}
+      maxZoom={12}
+      minZoom={8}
+    >
+      <TileLayer
+        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
+        url="https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png"
+      />
+      <MapUpdater coord={coord} zoom={zoom} />
+    </MapContainer>
   );
 };
 
-export default MapComponent;
+export default LeafletMap;

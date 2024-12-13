@@ -12,6 +12,7 @@
   "dependencies": {
     "@ant-design/charts": "^2.2.3",
     "@ant-design/icons": "^5.5.2",
+    "@react-leaflet/core": "^2.1.0",
     "antd": "^5.22.3",
     "axios": "^1.7.9",
     "leaflet": "^1.9.4",

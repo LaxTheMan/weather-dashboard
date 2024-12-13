@@ -1,7 +1,7 @@
 import localFont from "next/font/local";
 import { SearchBar } from "./ui/search";
 import { WeatherCard } from "./ui/weatherCard";
-import { Card, Flex } from "antd";
+import { Card, Flex, Spin } from "antd";
 import {
   LineChart,
   Line,
@@ -10,6 +10,7 @@ import {
   YAxis,
   Legend,
   Tooltip,
+  ResponsiveContainer,
 } from "recharts";
 
 import Title from "antd/es/typography/Title";
@@ -24,7 +25,7 @@ import {
 } from "./lib/date";
 import { useWeather } from "./hooks/useWeather";
 import { toTitleCase } from "./lib/misc";
-// import MapComponent from "./ui/map";
+import { LazyMap } from "./ui/MapComponent";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -39,10 +40,13 @@ const geistMono = localFont({
 
 export default function Home() {
   const {
+    error,
+    loading,
     weatherData,
     dayForecastData,
     hourlyForecastData,
     coordinates,
+    setError,
     fetchLocation,
     fetchDailyForecastByCoordinates,
     fetchHourlyForecastByCoordinates,
@@ -62,23 +66,36 @@ export default function Home() {
     }
   }, [coordinates]);
 
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <Spin size="large" tip="Loading weather data..." />
+      </div>
+    );
+  }
+
+  if (error !== "") {
+    alert(error);
+    setError("");
+  }
+
   return (
     <div
-      className={`${geistSans.variable} ${geistMono.variable} bg-white grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]`}
+      className={`${geistSans.variable} ${geistMono.variable} bg-white grid grid-rows-[20px_1fr_20px] justify-items-center min-h-screen p-16 pb-20 gap-16 font-[family-name:var(--font-geist-sans)]`}
     >
       <main className="flex flex-col gap-6 row-start-2">
         <SearchBar onSearch={fetchAllWeatherByCity} />
         <Title level={1} underline>
           {toTitleCase(weatherData.city)}, {weatherData.cityCode}
         </Title>
-        <Flex justify="space-between">
+        <Flex gap={15} justify="space-between">
           <DetailedCard
             date={formatDate(weatherData.date)}
             time={formatTime(weatherData.date)}
             weather={weatherData?.weather}
             weatherIcon={weatherData.weatherIcon}
-            temperature={weatherData?.temp}
-            feelsLike={weatherData?.feelsLike}
+            temperature={Math.round(weatherData?.temp)}
+            feelsLike={Math.round(weatherData?.feelsLike)}
             description={weatherData?.description}
             windSpeed={weatherData?.windSpeed}
             pressure={weatherData?.pressure}
@@ -87,15 +104,19 @@ export default function Home() {
             visibility={weatherData?.visibility}
             handleReload={() => fetchWeatherByCoordinates(coordinates)}
           />
-          {/* <MapComponent
-            
-            latitude={coordinates.lat}
-            longitude={coordinates.long}
-          /> */}
+          <div className="h-full w-[250px] md:w-[350px] lg:w-[550px]">
+            <LazyMap
+              coord={{
+                lat: coordinates.lat,
+                lon: coordinates.lon,
+              }}
+              zoom={10}
+            />
+          </div>
         </Flex>
-        <div>
+        <div style={{ width: "100%" }}>
           <Title level={4}>5 Day Forecast</Title>
-          <Flex gap="middle" align="start">
+          <Flex gap={20} align="start">
             {dayForecastData.map((forecast, index) => (
               <WeatherCard
                 key={index}
@@ -110,17 +131,19 @@ export default function Home() {
             ))}
           </Flex>
         </div>
-        <div>
+        <div style={{ width: "100%" }}>
           <Title level={4}>3 Hourly Forecast</Title>
           <Card bordered={false}>
-            <LineChart width={600} height={300} data={hourlyForecastData}>
-              <Line type="monotone" dataKey="temp" stroke="#8884d8" />
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="date" />
-              <YAxis unit="°C" />
-              <Legend />
-              <Tooltip />
-            </LineChart>
+            <ResponsiveContainer width="100%" height={300}>
+              <LineChart data={hourlyForecastData}>
+                <Line type="monotone" dataKey="temp" stroke="#8884d8" />
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="date" />
+                <YAxis unit="°C" />
+                <Legend />
+                <Tooltip />
+              </LineChart>
+            </ResponsiveContainer>
           </Card>
         </div>
       </main>

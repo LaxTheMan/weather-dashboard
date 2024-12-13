@@ -185,7 +185,7 @@ export const getHourlyForecast = async (lat: number, lon: number) => {
 
 const extractWeatherData = (data: WeatherApiResponse): Weather => {
   return {
-    date: data.dt,
+    date: Math.floor(Date.now() / 1000),
     city: data.name,
     cityCode: data.sys.country,
     weather: data.weather[0].main,

@@ -17,6 +17,8 @@ export type Coord = {
 };
 
 export const useWeather = () => {
+  const [error, setError] = useState<string>("");
+  const [loading, setLoading] = useState<Boolean>(true);
   const [weatherData, setWeatherData] = useState<Weather>({
     date: 0,
     city: "",
@@ -46,10 +48,15 @@ export const useWeather = () => {
         lat: response.data.lat,
         lon: response.data.lon,
       });
+      setLoading(false);
     } catch (err) {
       console.log(err);
       // Set to default coordinates if error
-      setCoordinates({ lat: 28.6448, lon: 77.216721 });
+      setCoordinates({
+        lat: 28.6448,
+        lon: 77.216721,
+      });
+      setLoading(false);
     }
   };
 
@@ -91,19 +98,24 @@ export const useWeather = () => {
         getHourlyForecast(coord.lat, coord.lon),
       ]);
 
+      setCoordinates(coord);
       setWeatherData(weather);
       setDayForecastData(dailyForecast);
       setHourlyForecastData(hourlyForecast);
     } catch (err) {
+      setError("Enter a valid city");
       console.log(err);
     }
   };
 
   return {
+    error,
+    loading,
     weatherData,
     dayForecastData,
     hourlyForecastData,
     coordinates,
+    setError,
     fetchLocation,
     fetchDailyForecastByCoordinates,
     fetchHourlyForecastByCoordinates,

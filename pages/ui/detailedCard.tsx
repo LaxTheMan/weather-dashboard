@@ -20,7 +20,7 @@ type DetailedCardProps = {
   handleReload: () => void;
 };
 
-const DetailedCard= ({
+const DetailedCard = ({
   date,
   time,
   weather,
@@ -36,7 +36,7 @@ const DetailedCard= ({
   handleReload,
 }: DetailedCardProps) => {
   return (
-    <Card style={{ width: 350, borderRadius: 8 }}>
+    <Card style={{ width: "50%", borderRadius: 8, minWidth: 140 }}>
       <Row justify="space-between">
         <Text style={{ color: "#ff7a45", fontWeight: "bold" }}>
           {date}, {time}
