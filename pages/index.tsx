@@ -83,7 +83,7 @@ export default function Home() {
             windSpeed={weatherData?.windSpeed}
             pressure={weatherData?.pressure}
             humidity={weatherData?.humidity}
-            dewPoint={weatherData?.dewPoint}
+            clouds={weatherData?.clouds}
             visibility={weatherData?.visibility}
             handleReload={() => fetchWeatherByCoordinates(coordinates)}
           />

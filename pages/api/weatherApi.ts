@@ -16,7 +16,7 @@ export type Weather = {
   windSpeed: number;
   pressure: number;
   humidity: number;
-  dewPoint: number;
+  clouds: number;
   visibility: number;
 };
 
@@ -196,7 +196,7 @@ const extractWeatherData = (data: WeatherApiResponse): Weather => {
     windSpeed: data.wind.speed,
     pressure: data.main.pressure,
     humidity: data.main.humidity,
-    dewPoint: 0,
+    clouds: data.clouds.all,
     visibility: data.visibility,
   };
 };

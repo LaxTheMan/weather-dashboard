@@ -15,7 +15,7 @@ type DetailedCardProps = {
   windSpeed: number;
   pressure: number;
   humidity: number;
-  dewPoint: number;
+  clouds: number;
   visibility: number;
   handleReload: () => void;
 };
@@ -31,7 +31,7 @@ const DetailedCard= ({
   windSpeed,
   pressure,
   humidity,
-  dewPoint,
+  clouds,
   visibility,
   handleReload,
 }: DetailedCardProps) => {
@@ -87,7 +87,7 @@ const DetailedCard= ({
           <Text>Humidity: {humidity}%</Text>
         </Col>
         <Col span={12}>
-          <Text>Dew Point: {dewPoint}</Text>
+          <Text>Cloudiness: {clouds}%</Text>
         </Col>
         <Col span={12}>
           <Text>Visibility: {visibility / 1000}Km</Text>

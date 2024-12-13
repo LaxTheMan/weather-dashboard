@@ -24,7 +24,7 @@ export const useWeather = () => {
     weather: "",
     weatherIcon: "",
     description: "",
-    dewPoint: 0,
+    clouds: 0,
     feelsLike: 0,
     humidity: 0,
     pressure: 0,
