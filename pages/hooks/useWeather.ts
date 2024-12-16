@@ -18,7 +18,7 @@ export type Coord = {
 
 export const useWeather = () => {
   const [error, setError] = useState<string>("");
-  const [loading, setLoading] = useState<Boolean>(true);
+  const [loading, setLoading] = useState<boolean>(true);
   const [weatherData, setWeatherData] = useState<Weather>({
     date: 0,
     city: "",

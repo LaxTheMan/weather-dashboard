@@ -33,6 +33,7 @@ export type HourForecast = {
   date: string;
   temp: number;
   humidity: number;
+  wind: number;
 };
 
 type WeatherApiResponse = {
@@ -221,5 +222,6 @@ const extractHourlyForecastData = (
     date: formatTo12Hour(forecast.dt),
     temp: forecast.main.temp,
     humidity: forecast.main.humidity,
+    wind: forecast.wind.speed,
   }));
 };

@@ -1,7 +1,8 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import localFont from "next/font/local";
 import { SearchBar } from "./ui/search";
 import { WeatherCard } from "./ui/weatherCard";
-import { Card, Flex, Spin } from "antd";
+import { Card, Flex, Segmented, Spin } from "antd";
 import {
   LineChart,
   Line,
@@ -14,7 +15,7 @@ import {
 } from "recharts";
 
 import Title from "antd/es/typography/Title";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import DetailedCard from "./ui/detailedCard";
 
 import {
@@ -54,6 +55,8 @@ export default function Home() {
     fetchAllWeatherByCity,
   } = useWeather();
 
+  const [dataKey, setDataKey] = useState<string>("temp");
+  
   useEffect(() => {
     fetchLocation();
   }, []);
@@ -69,7 +72,7 @@ export default function Home() {
   if (loading) {
     return (
       <div className="flex justify-center items-center h-screen">
-        <Spin size="large" tip="Loading weather data..." />
+        <Spin size="large" />
       </div>
     );
   }
@@ -124,7 +127,7 @@ export default function Home() {
                 day={getDayOfWeekFromEpoch(forecast.date).substring(0, 3)}
                 weather={forecast.weather}
                 weatherIcon={forecast.weatherIcon}
-                temp={forecast.temp}
+                temp={Math.round(forecast.temp)}
                 minTemp={forecast.minTemp}
                 maxTemp={forecast.maxTemp}
               />
@@ -136,14 +139,34 @@ export default function Home() {
           <Card bordered={false}>
             <ResponsiveContainer width="100%" height={300}>
               <LineChart data={hourlyForecastData}>
-                <Line type="monotone" dataKey="temp" stroke="#8884d8" />
+                <Line type="monotone" dataKey={dataKey} stroke="#8884d8" />
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis dataKey="date" />
-                <YAxis unit="°C" />
+                <YAxis
+                  unit={
+                    dataKey === "temp"
+                      ? "°C"
+                      : dataKey === "humidity"
+                      ? "%"
+                      : "m/s"
+                  }
+                />
                 <Legend />
                 <Tooltip />
               </LineChart>
             </ResponsiveContainer>
+            <div style={{ marginTop: 20, textAlign: "center" }}>
+              <Segmented
+                options={[
+                  { label: "Temperature", value: "temp" },
+                  { label: "Humidity", value: "humidity" },
+                  { label: "Wind", value: "wind" },
+                ]}
+                value={dataKey}
+                onChange={setDataKey}
+                style={{ width: 243 }}
+              />
+            </div>
           </Card>
         </div>
       </main>
