@@ -2,7 +2,7 @@
 import localFont from "next/font/local";
 import { SearchBar } from "../views/ui/search";
 import { WeatherCard } from "../views/ui/weatherCard";
-import { Card, Flex, Segmented, Spin } from "antd";
+import { Card, Flex, notification, Segmented, Spin } from "antd";
 import {
   LineChart,
   Line,
@@ -69,17 +69,23 @@ export default function Home() {
     }
   }, [coordinates]);
 
+  useEffect(() => {
+    if (error) {
+      // Show the error notification when error state changes
+      notification.error({
+        message: "Error",
+        description: error,
+        onClose: () => setError(""), // Reset error when the notification is closed
+      });
+    }
+  }, [error, setError]);
+
   if (loading) {
     return (
       <div className="flex justify-center items-center h-screen">
         <Spin size="large" />
       </div>
     );
-  }
-
-  if (error !== "") {
-    alert(error);
-    setError("");
   }
 
   return (

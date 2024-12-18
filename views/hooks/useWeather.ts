@@ -51,6 +51,7 @@ export const useWeather = () => {
       setLoading(false);
     } catch (err) {
       console.log(err);
+      setError("Failed to get location. Using default coordinates.");
       // Set to default coordinates if error
       setCoordinates({
         lat: 28.6448,
@@ -66,6 +67,7 @@ export const useWeather = () => {
       setWeatherData(weather);
     } catch (err) {
       console.log(err);
+      setError("Error fetching weather data. Please try again later.");
     }
   };
 
@@ -75,6 +77,7 @@ export const useWeather = () => {
       setDayForecastData(dailyForecast);
     } catch (err) {
       console.log(err);
+      setError("Error fetching daily forecast. Please try again later.");
     }
   };
 
@@ -84,11 +87,13 @@ export const useWeather = () => {
       setHourlyForecastData(hourlyForecast);
     } catch (err) {
       console.log(err);
+      setError("Error fetching hourly forecast. Please try again later.");
     }
   };
 
   const fetchAllWeatherByCity = async (city: string) => {
     try {
+      setError(""); // Clear previous errors
       const coord: Coord = await getCoordinatesByCity(city);
 
       // Do api calls in parallel
@@ -102,9 +107,14 @@ export const useWeather = () => {
       setWeatherData(weather);
       setDayForecastData(dailyForecast);
       setHourlyForecastData(hourlyForecast);
-    } catch (err) {
-      setError("Enter a valid city");
-      console.log(err);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (err: any) {
+      console.error(err);
+      if (err.response?.status === 404) {
+        setError("City not found. Please enter a valid city.");
+      } else {
+        setError("Error fetching data. Please try again later.");
+      }
     }
   };
 

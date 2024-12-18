@@ -12,14 +12,19 @@ type GeocodingApiResponse = {
 }[];
 
 export const getCoordinatesByCity = async (city: string) => {
-  const response = await axios.get(`${BASE_URL}/direct`, {
-    params: {
-      q: city,
-      limit: 5,
-      appid: API_KEY,
-    },
-  });
-  return extractCoordinates(response.data);
+  try {
+    const response = await axios.get(`${BASE_URL}/direct`, {
+      params: {
+        q: city,
+        limit: 5,
+        appid: API_KEY,
+      },
+    });
+    return extractCoordinates(response.data);
+  } catch (err) {
+    console.log(err);
+    throw new Error("Error fetching data from GeocodingAPI");
+  }
 };
 
 const extractCoordinates = (data: GeocodingApiResponse): Coord => {

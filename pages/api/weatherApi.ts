@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import axios from "axios";
 import { formatTo12Hour } from "../../views/lib/date";
 
@@ -136,52 +137,67 @@ type ForecastApiResponse = {
 };
 
 export const getWeatherByCity = async (city: string) => {
-  const response = await axios.get(`${BASE_URL}/weather`, {
-    params: {
-      q: city,
-      appid: API_KEY,
-      units: "metric",
-    },
-  });
-  return extractWeatherData(response.data);
+  try {
+    const response = await axios.get(`${BASE_URL}/weather`, {
+      params: {
+        q: city,
+        appid: API_KEY,
+        units: "metric",
+      },
+    });
+    return extractWeatherData(response.data);
+  } catch (err) {
+    throw new Error("Error fetching weather data.");
+  }
 };
 
 export const getWeatherByCoordinates = async (lat: number, lon: number) => {
-  const response = await axios.get(`${BASE_URL}/weather`, {
-    params: {
-      lat: lat,
-      lon: lon,
-      appid: API_KEY,
-      units: "metric",
-    },
-  });
-  return extractWeatherData(response.data);
+  try {
+    const response = await axios.get(`${BASE_URL}/weather`, {
+      params: {
+        lat: lat,
+        lon: lon,
+        appid: API_KEY,
+        units: "metric",
+      },
+    });
+    return extractWeatherData(response.data);
+  } catch (err) {
+    throw new Error("Error fetching weather data.");
+  }
 };
 
 export const getDailyForecast = async (lat: number, lon: number) => {
-  const response = await axios.get(`${BASE_URL}/forecast`, {
-    params: {
-      lat: lat,
-      lon: lon,
-      appid: API_KEY,
-      units: "metric",
-    },
-  });
+  try {
+    const response = await axios.get(`${BASE_URL}/forecast`, {
+      params: {
+        lat: lat,
+        lon: lon,
+        appid: API_KEY,
+        units: "metric",
+      },
+    });
 
-  return extractDailyForecastData(response.data);
+    return extractDailyForecastData(response.data);
+  } catch (err) {
+    throw new Error("Error fetching daily forecast.");
+  }
 };
 export const getHourlyForecast = async (lat: number, lon: number) => {
-  const response = await axios.get(`${BASE_URL}/forecast`, {
-    params: {
-      lat: lat,
-      lon: lon,
-      cnt: 8,
-      appid: API_KEY,
-      units: "metric",
-    },
-  });
-
-  return extractHourlyForecastData(response.data);
+  try {
+    const response = await axios.get(`${BASE_URL}/forecast`, {
+      params: {
+        lat: lat,
+        lon: lon,
+        cnt: 8,
+        appid: API_KEY,
+        units: "metric",
+      },
+    });
+    return extractHourlyForecastData(response.data);
+  } catch (err) {
+    throw new Error("Error fetching hourly forecast.");
+  }
 };
 
 const extractWeatherData = (data: WeatherApiResponse): Weather => {
