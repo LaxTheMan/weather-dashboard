@@ -1,5 +1,5 @@
 import axios from "axios";
-import { Coord } from "../hooks/useWeather";
+import { Coord } from "@/views/hooks/useWeather";
 
 const API_KEY = process.env.NEXT_PUBLIC_OPENWEATHERMAP_API_KEY;
 const BASE_URL = "http://api.openweathermap.org/geo/1.0";

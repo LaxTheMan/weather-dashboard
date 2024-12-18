@@ -7,9 +7,9 @@ import {
   getWeatherByCoordinates,
   HourForecast,
   Weather,
-} from "../api/weatherApi";
+} from "../../pages/api/weatherApi";
 import axios from "axios";
-import { getCoordinatesByCity } from "../api/geocodingApi";
+import { getCoordinatesByCity } from "@/pages/api/geocodingApi";
 
 export type Coord = {
   lat: number;

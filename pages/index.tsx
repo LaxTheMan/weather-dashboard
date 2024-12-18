@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import localFont from "next/font/local";
-import { SearchBar } from "./ui/search";
-import { WeatherCard } from "./ui/weatherCard";
+import { SearchBar } from "../views/ui/search";
+import { WeatherCard } from "../views/ui/weatherCard";
 import { Card, Flex, Segmented, Spin } from "antd";
 import {
   LineChart,
@@ -16,17 +16,17 @@ import {
 
 import Title from "antd/es/typography/Title";
 import React, { useEffect, useState } from "react";
-import DetailedCard from "./ui/detailedCard";
+import DetailedCard from "../views/ui/detailedCard";
 
 import {
   formatDate,
   formatTime,
   getDayFromEpoch,
   getDayOfWeekFromEpoch,
-} from "./lib/date";
-import { useWeather } from "./hooks/useWeather";
-import { toTitleCase } from "./lib/misc";
-import { LazyMap } from "./ui/MapComponent";
+} from "../views/lib/date";
+import { toTitleCase } from "../views/lib/misc";
+import { LazyMap } from "../views/MapComponent";
+import { useWeather } from "@/views/hooks/useWeather";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -56,7 +56,7 @@ export default function Home() {
   } = useWeather();
 
   const [dataKey, setDataKey] = useState<string>("temp");
-  
+
   useEffect(() => {
     fetchLocation();
   }, []);

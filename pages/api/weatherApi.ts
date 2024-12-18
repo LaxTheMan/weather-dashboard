@@ -1,5 +1,5 @@
 import axios from "axios";
-import { formatTo12Hour } from "../lib/date";
+import { formatTo12Hour } from "../../views/lib/date";
 
 const API_KEY = process.env.NEXT_PUBLIC_OPENWEATHERMAP_API_KEY;
 const BASE_URL = "https://api.openweathermap.org/data/2.5";

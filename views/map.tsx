@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { MapContainer, TileLayer, useMap } from "react-leaflet";
-import { Coord } from "../hooks/useWeather";
+import { Coord } from "./hooks/useWeather";
 
 type LeafletMapProps = {
   coord: Coord;
@@ -14,7 +14,7 @@ const MapUpdater = ({ coord, zoom }: LeafletMapProps) => {
     if (coord.lat !== 0 && coord.lon !== 0) {
       map.setView([coord.lat, coord.lon], zoom);
     }
-  }, [coord, map]);
+  }, [coord, map, zoom]);
 
   return null;
 };
