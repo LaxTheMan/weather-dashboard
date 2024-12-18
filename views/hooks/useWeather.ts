@@ -43,7 +43,7 @@ export const useWeather = () => {
 
   const fetchLocation = async () => {
     try {
-      const response = await axios.get("http://ip-api.com/json");
+      const response = await axios.get("https://ip-api.com/json");
       setCoordinates({
         lat: response.data.lat,
         lon: response.data.lon,
