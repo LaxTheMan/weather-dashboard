@@ -48,7 +48,7 @@ export default function Home() {
     hourlyForecastData,
     coordinates,
     setError,
-    fetchLocation,
+    fetchInitialLocation,
     fetchDailyForecastByCoordinates,
     fetchHourlyForecastByCoordinates,
     fetchWeatherByCoordinates,
@@ -58,7 +58,7 @@ export default function Home() {
   const [dataKey, setDataKey] = useState<string>("temp");
 
   useEffect(() => {
-    fetchLocation();
+    fetchInitialLocation();
   }, []);
 
   useEffect(() => {

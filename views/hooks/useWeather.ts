@@ -8,7 +8,6 @@ import {
   HourForecast,
   Weather,
 } from "../../pages/api/weatherApi";
-import axios from "axios";
 import { getCoordinatesByCity } from "@/pages/api/geocodingApi";
 
 export type Coord = {
@@ -41,13 +40,15 @@ export const useWeather = () => {
   );
   const [coordinates, setCoordinates] = useState<Coord>({ lat: 0, lon: 0 });
 
-  const fetchLocation = async () => {
+  const fetchInitialLocation = async () => {
     try {
-      const response = await axios.get("https://ip-api.com/json");
-      setCoordinates({
-        lat: response.data.lat,
-        lon: response.data.lon,
-      });
+      // Call the /api/getLocation endpoint (the server-side API route we created)
+      const response = await fetch("/api/getLocation");
+      if (!response.ok) {
+        throw new Error("Failed to fetch location");
+      }
+      const coords: Coord = await response.json();
+      setCoordinates(coords);
       setLoading(false);
     } catch (err) {
       console.log(err);
@@ -107,7 +108,7 @@ export const useWeather = () => {
       setWeatherData(weather);
       setDayForecastData(dailyForecast);
       setHourlyForecastData(hourlyForecast);
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
       console.error(err);
       if (err.response?.status === 404) {
@@ -126,7 +127,7 @@ export const useWeather = () => {
     hourlyForecastData,
     coordinates,
     setError,
-    fetchLocation,
+    fetchInitialLocation,
     fetchDailyForecastByCoordinates,
     fetchHourlyForecastByCoordinates,
     fetchAllWeatherByCity,
