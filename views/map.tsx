@@ -1,6 +1,6 @@
+import { Coord } from "@/types/LocationTypes";
 import { useEffect } from "react";
 import { MapContainer, TileLayer, useMap } from "react-leaflet";
-import { Coord } from "./hooks/useWeather";
 
 type LeafletMapProps = {
   coord: Coord;
