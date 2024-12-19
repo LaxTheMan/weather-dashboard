@@ -1,7 +1,4 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import localFont from "next/font/local";
-import { SearchBar } from "../views/ui/search";
-import { WeatherCard } from "../views/ui/weatherCard";
 import { Card, Flex, notification, Segmented, Spin } from "antd";
 import {
   LineChart,
@@ -16,29 +13,21 @@ import {
 
 import Title from "antd/es/typography/Title";
 import React, { useEffect, useState } from "react";
-import DetailedCard from "../views/ui/detailedCard";
+import DetailedCard from "@/components/ui/DetailedCard";
 
 import {
   formatDate,
   formatTime,
   getDayFromEpoch,
   getDayOfWeekFromEpoch,
-} from "../views/lib/date";
-import { toTitleCase } from "../views/lib/misc";
-import { LazyMap } from "../views/MapComponent";
-import { useWeather } from "@/views/hooks/useWeather";
+} from "@/utils/date";
+import { toTitleCase } from "@/utils/misc";
+import { LazyMap } from "@/components/map/MapComponent";
+import { useWeather } from "@/hooks/useWeather";
 import { WEATHER_SEGMENTED_OPTIONS } from "@/constants/common";
-
-const geistSans = localFont({
-  src: "./fonts/GeistVF.woff",
-  variable: "--font-geist-sans",
-  weight: "100 900",
-});
-const geistMono = localFont({
-  src: "./fonts/GeistMonoVF.woff",
-  variable: "--font-geist-mono",
-  weight: "100 900",
-});
+import { geistMono, geistSans } from "@/utils/font";
+import { SearchBar } from "@/components/ui/Search";
+import { WeatherCard } from "@/components/ui/WeatherCard";
 
 export default function Home() {
   const {

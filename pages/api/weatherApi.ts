@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import axios from "axios";
-import { formatTo12Hour } from "../../views/lib/date";
 import { ForecastApiResponse, WeatherApiResponse } from "@/types/ResponseTypes";
 import { DayForecast, HourForecast, Weather } from "@/types/WeatherTypes";
+import { formatTo12Hour } from "@/utils/date";
 
 const API_KEY = process.env.NEXT_PUBLIC_OPENWEATHERMAP_API_KEY;
 const BASE_URL = "https://api.openweathermap.org/data/2.5";
