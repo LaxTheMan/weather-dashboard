@@ -170,7 +170,6 @@ export default function Home() {
                 ]}
                 value={dataKey}
                 onChange={setDataKey}
-                style={{ width: 243 }}
               />
             </div>
           </Card>

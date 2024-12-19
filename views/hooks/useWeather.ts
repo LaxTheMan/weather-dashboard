@@ -1,19 +1,8 @@
 import { useState } from "react";
-import {
-  DayForecast,
-  getDailyForecast,
-  getHourlyForecast,
-  getWeatherByCity,
-  getWeatherByCoordinates,
-  HourForecast,
-  Weather,
-} from "../../pages/api/weatherApi";
 import { getCoordinatesByCity } from "@/pages/api/geocodingApi";
-
-export type Coord = {
-  lat: number;
-  lon: number;
-};
+import { DayForecast, HourForecast, Weather } from "@/types/WeatherTypes";
+import { getDailyForecast, getHourlyForecast, getWeatherByCity, getWeatherByCoordinates } from "@/pages/api/weatherApi";
+import { Coord } from "@/types/LocationTypes";
 
 export const useWeather = () => {
   const [error, setError] = useState<string>("");

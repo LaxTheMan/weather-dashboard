@@ -1,10 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import axios from "axios";
-
-interface Coord {
-  lat: number;
-  lon: number;
-}
+import { Coord } from "@/types/LocationTypes";
 
 export default async function handler(
   req: NextApiRequest,

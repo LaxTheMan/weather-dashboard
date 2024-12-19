@@ -1,15 +1,9 @@
 import axios from "axios";
-import { Coord } from "@/views/hooks/useWeather";
+import { GeocodingApiResponse } from "@/types/ResponseTypes";
+import { Coord } from "@/types/LocationTypes";
 
 const API_KEY = process.env.NEXT_PUBLIC_OPENWEATHERMAP_API_KEY;
 const BASE_URL = "https://api.openweathermap.org/geo/1.0";
-
-type GeocodingApiResponse = {
-  name: string;
-  lat: number;
-  lon: number;
-  country: string;
-}[];
 
 export const getCoordinatesByCity = async (city: string) => {
   try {
