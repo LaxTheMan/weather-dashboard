@@ -8,8 +8,6 @@ export type WeatherCardProps = {
   weather: string;
   weatherIcon: string;
   temp: number;
-  minTemp: number;
-  maxTemp: number;
 };
 
 export const WeatherCard = ({
@@ -18,10 +16,6 @@ export const WeatherCard = ({
   weather,
   weatherIcon,
   temp,
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  minTemp,
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  maxTemp,
 }: WeatherCardProps) => {
   return (
     <Card

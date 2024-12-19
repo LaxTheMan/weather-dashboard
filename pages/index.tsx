@@ -27,6 +27,7 @@ import {
 import { toTitleCase } from "../views/lib/misc";
 import { LazyMap } from "../views/MapComponent";
 import { useWeather } from "@/views/hooks/useWeather";
+import { WEATHER_SEGMENTED_OPTIONS } from "@/constants/common";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -134,8 +135,6 @@ export default function Home() {
                 weather={forecast.weather}
                 weatherIcon={forecast.weatherIcon}
                 temp={Math.round(forecast.temp)}
-                minTemp={forecast.minTemp}
-                maxTemp={forecast.maxTemp}
               />
             ))}
           </Flex>
@@ -163,11 +162,7 @@ export default function Home() {
             </ResponsiveContainer>
             <div style={{ marginTop: 20, textAlign: "center" }}>
               <Segmented
-                options={[
-                  { label: "Temperature", value: "temp" },
-                  { label: "Humidity", value: "humidity" },
-                  { label: "Wind", value: "wind" },
-                ]}
+                options={WEATHER_SEGMENTED_OPTIONS}
                 value={dataKey}
                 onChange={setDataKey}
               />

@@ -18,7 +18,6 @@ export default async function handler(
     });
 
     const data = response.data;
-    console.log(data);
     // Ensure the data is valid and contains the expected format
     if (data) {
       const coordinates: Coord = {

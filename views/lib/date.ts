@@ -1,20 +1,27 @@
+import { DAYS_OF_WEEK } from "@/constants/common";
+
 export const getDayFromEpoch = (epochTime: number): number => {
   const date = new Date(epochTime * 1000);
   return date.getDate();
 };
 
 export const getDayOfWeekFromEpoch = (epochTime: number): string => {
-  const days = [
-    "Sunday",
-    "Monday",
-    "Tuesday",
-    "Wednesday",
-    "Thursday",
-    "Friday",
-    "Saturday",
-  ];
   const date = new Date(epochTime * 1000);
-  return days[date.getDay()];
+  return DAYS_OF_WEEK[date.getDay()];
+};
+
+export const calculateDaySuffix = (day: number) => {
+  if (day > 3 && day < 21) return "th";
+  switch (day % 10) {
+    case 1:
+      return "st";
+    case 2:
+      return "nd";
+    case 3:
+      return "rd";
+    default:
+      return "th";
+  }
 };
 
 export const formatDate = (epochTime: number): string => {
@@ -23,21 +30,7 @@ export const formatDate = (epochTime: number): string => {
   const month = date.toLocaleString("default", { month: "short" });
   const year = date.getFullYear();
 
-  const suffix = (day: number) => {
-    if (day > 3 && day < 21) return "th";
-    switch (day % 10) {
-      case 1:
-        return "st";
-      case 2:
-        return "nd";
-      case 3:
-        return "rd";
-      default:
-        return "th";
-    }
-  };
-
-  return `${day}${suffix(day)} ${month} ${year}`;
+  return `${day}${calculateDaySuffix(day)} ${month} ${year}`;
 };
 
 export const formatTime = (epochTime: number): string => {
